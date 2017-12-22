@@ -1,7 +1,9 @@
 package solver;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
@@ -28,7 +30,8 @@ public class DepthFirstSearchSolver {
 		while (!currentCell.equals(maze.getFinish())) {
 			if (!closed.contains(currentCell)) {
 				closed.add(currentCell);
-				for (ImmutablePair<Integer, Integer> cell : maze.getSuccessors(currentCell)) {
+				List<ImmutablePair<Integer, Integer>> succs = maze.getSuccessors(currentCell);
+				for (ImmutablePair<Integer, Integer> cell : succs) {
 					ArrayList<ImmutablePair<Integer, Integer>> newPath = new ArrayList<>(current);
 					newPath.add(cell);
 					frontier.push(newPath);
@@ -42,9 +45,9 @@ public class DepthFirstSearchSolver {
 			currentCell = current.get(current.size() - 1);
 		}
 		if (found)
-			System.out.printf("Steps=%d, Path=%s\n", current.size(), current);
+			System.out.printf("DFS: steps=%d, Path=%s\n", current.size(), current);
 		else
-			System.out.println("Path to solution not found");
+			System.out.println("DFS: path to solution not found");
 		return current;
 	}
 }
